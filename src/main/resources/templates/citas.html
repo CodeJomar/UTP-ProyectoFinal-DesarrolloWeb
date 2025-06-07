@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legacy |💈BarberShop💈</title>
+
+  <!-- Bootstrap CSS v5.3.x -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons v5.3.x -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- CSS Externo -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/citas.css">
+
+  <!-- JS Externo -->
+  <script defer th:src="@{/javascript/login.js}"></script>
+
+</head>
+
+<body>
+
+  <header>
+
+    <!-- Navegación -->
+    <nav th:insert="~{nav.html}"></nav>
+
+  </header>
+
+  <main class="container py-5">
+    <form class="formulario mt-5" method="post" th:action="@{/tablaCitas}" th:object="${cita}">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center text-primary mb-4">
+            <h2>Agenda tu Cita</h2>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="form-floating">
+              <input th:field="*{nombre}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+              <label for="floatingInput">Nombres</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="form-floating">
+              <input th:field="*{apellido}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+              <label for="floatingInput">Apellidos</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="form-floating">
+              <input th:field="*{email}" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+              <label for="floatingInput">Correo Electrónico</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="form-floating">
+              <select th:field="*{motivo}" class="form-select" id="floatingSelectGrid" required>
+                <option value="Corte de barbero">Corte de barbero</option>
+                <option value="Corte de estilista">Corte de estilista</option>
+                <option value="Teñir el cabello">Teñir el cabello</option>
+              </select>
+              <label for="floatingSelectGrid">Motivo de la cita</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="form-floating">
+              <input th:field="*{telefono}" type="tel" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <label for="floatingInput">Teléfono</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="text-start">
+              <h6>Género</h6>
+            </div>
+            <div class="d-flex flex-row gap-3">
+              <div class="form-check">
+                <input th:field="*{sexo}" value="Masculino" class="form-check-input" type="radio" name="radioDefault" id="radioDefault1" checked>
+                <label class="form-check-label" for="radioDefault1">
+                  Masculino
+                </label>
+              </div>
+              <div class="form-check">
+                <input th:field="*{sexo}" value="Femenino" class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
+                <label class="form-check-label" for="radioDefault2">
+                  Femenino
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="form-floating">
+              <input th:field="*{dia}" type="date" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+              <label for="floatingInput">Día de la cita</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="form-floating">
+              <input th:field="*{hora}" type="time" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+              <label for="floatingInput">Hora de la cita</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-12 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Realizar Cita</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <!-- Modal - Login -->
+  <modal class="modal" id="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content container-fluid p-5">
+      </div>
+    </div>
+  </modal>
+
+  <footer th:insert="~{footer.html}"></footer>
+
+  <!-- Bootstrap JS v5.3.x -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

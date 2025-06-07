@@ -1,0 +1,58 @@
+<header xmlns:th="http://www.w3.org/1999/xhtml">
+
+  <!-- Navegación -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-bg bg-dark shadow-md rounded-bottom p-3" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand" href="/index">
+        <i class="bi-back"></i>
+        <span th:text="${#strings.toUpperCase('Legacy')}" class="footer-titulo fw-bold" th:classappend="ms-2"></span>
+      </a>
+
+      <div class="d-lg-none ms-auto me-4">
+        <a class="navbar-icon bi-person smoothscroll" data-bs-toggle="modal" data-bs-target="#modal"
+           data-modal-login="login" role="button"></a>
+      </div>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto me-lg-auto gap-sm-2 gap-lg-5">
+          <li class="nav-item">
+            <a class="nav-link click-scroll" th:href="@{/index}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link click-scroll" th:href="@{#tendencia}">Tendencia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link click-scroll" th:href="@{/citas}">Citas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link click-scroll" th:href="@{/ventas}">Productos</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">Inventario</a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+              <li>
+                <a class="dropdown-item"  th:href="@{/tablaUsuarios}">Listado de Usuarios</a>
+              </li>
+              <li>
+                <a class="dropdown-item" th:href="@{/tablaCitas}" >Listado de Citas</a>
+              </li>
+              <li>
+                <a class="dropdown-item" th:href="@{/carrito}">Listado de Productos</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="d-none d-lg-block">
+          <a class="navbar-icon bi-person smoothscroll" data-bs-toggle="modal" data-bs-target="#modal"
+             data-modal-login="login" role="button"></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

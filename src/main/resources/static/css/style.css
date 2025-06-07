@@ -1,0 +1,9 @@
+.img-horizontal {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.img-vertical {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+}
