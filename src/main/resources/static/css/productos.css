@@ -1,0 +1,156 @@
+@import './index.css';
+
+body {
+  padding-top: 80px;
+  background-color: #f8f9fa;
+}
+
+.page-header {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-color) 100%);
+  color: white;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.filter-sidebar {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  top: 100px;
+}
+
+.filter-group {
+  margin-bottom: 2rem;
+}
+
+.filter-group h6 {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.form-check-input:checked {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.form-range::-webkit-slider-thumb {
+  background: var(--secondary-color);
+}
+
+.form-range::-moz-range-thumb {
+  background: var(--secondary-color);
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.category-badge {
+  background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #dc3545;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.stock-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+}
+
+.stock-available {
+  background: #d4edda;
+  color: #155724;
+}
+
+.stock-low {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.stock-out {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.btn-add-cart {
+  background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.btn-add-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+  color: white;
+}
+
+.search-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pagination .page-link {
+  border: none;
+  color: var(--primary-color);
+  margin: 0 2px;
+  border-radius: 8px;
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+}

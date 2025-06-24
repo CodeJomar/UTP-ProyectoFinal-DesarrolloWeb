@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legacy | 💈 BarberShop 💈</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- CSS Personalizado -->
+  <link rel="stylesheet" th:href="@{/css/index.css}">
+
+</head>
+
+<body>
+  <!-- Navegación -->
+  <nav th:replace="~{components/nav :: nav}"></nav>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="carousel slide mt-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#inicio" data-bs-slide-to="0" class="active" aria-current="true"
+        aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#inicio" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#inicio" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img th:src="@{/img/barber-banner.png}" class="d-block w-100" alt="Banner principal de Legacy Barbershop">
+        <div class="carousel-caption d-none d-md-block">
+          <h1 class="display-4 fw-bold">Bienvenido a Legacy</h1>
+          <p class="lead">La experiencia de barbería más exclusiva de la ciudad</p>
+          <a href="#nosotros" class="btn btn-primary btn-lg">Conoce más</a>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img th:src="@{/img/barber-carrusel-1.png}" class="d-block w-100" alt="Interior del salón Legacy">
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="display-5 fw-bold">Ambiente Profesional</h2>
+          <p class="lead">Instalaciones modernas y cómodas para tu mejor experiencia</p>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img th:src="@{/img/barber-carrusel-2.png}" class="d-block w-100" alt="Barbero atendiendo cliente">
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="display-5 fw-bold">Expertos en Estilo</h2>
+          <p class="lead">Barberos profesionales con años de experiencia</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#inicio" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#inicio" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </section>
+
+  <main class="py-5">
+    <!-- Sección Nosotros -->
+    <section id="nosotros" class="py-5 bg-light">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="video-container">
+              <video src="@{/img/video/barber-presentation.mp4}" autoplay loop muted class="w-100 h-auto"
+                style="max-height: 400px; object-fit: cover;">
+                Tu navegador no soporta el elemento video.
+              </video>
+            </div>
+          </div>
+
+          <div class="col-lg-6 ps-lg-5">
+            <h2 class="display-6 fw-bold mb-4">La Mejor Experiencia de Barbería en la Ciudad</h2>
+            <p class="lead mb-4">
+              Nos dedicamos a ofrecer servicios de alta calidad, combinando técnicas clásicas
+              con estilos modernos. Atención personalizada, ambiente cómodo y barberos expertos.
+            </p>
+
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                Barberos profesionales certificados
+              </li>
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                Productos de calidad premium
+              </li>
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                Sistema de reservas online
+              </li>
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                Ambiente relajado y profesional
+              </li>
+            </ul>
+
+            <a th:href="@{/citas}" class="btn btn-primary btn-lg">
+              <i class="bi bi-calendar-check me-2"></i>
+              Reservar Cita Ahora
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Tendencias -->
+    <section id="tendencias" class="py-5">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="section-title display-6 fw-bold">Cortes en Tendencia</h2>
+          <p class="lead text-muted">Descubre los estilos más populares del momento</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img th:src="@{/img/haircut-buzzcut.jpg}" class="card-img-top img-vertical" alt="Corte Buzz Cut">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">BUZZ CUT</h5>
+                <p class="card-text">
+                  Corte clásico y versátil, perfecto para un look limpio y moderno.
+                  Ideal para cualquier ocasión.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" data-type="service"
+                  data-service="buzzcut">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img th:src="@{/img/haircut-frenchcrop.jpg}" class="card-img-top img-vertical" alt="Corte French Crop">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">FRENCH CROP</h5>
+                <p class="card-text">
+                  Estilo europeo sofisticado con textura en la parte superior
+                  y laterales cortos.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" data-type="service"
+                  data-service="frenchcrop">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img th:src="@{/img/haircut-modcut.jpg}" class="card-img-top img-vertical" alt="Corte Mod Cut">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">MOD CUT</h5>
+                <p class="card-text">
+                  Inspirado en los años 60, este corte ofrece un look retro
+                  con un toque contemporáneo.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" data-type="service"
+                  data-service="modcut">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Productos -->
+    <section id="productos" class="py-5 bg-light">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="section-title display-6 fw-bold">Productos Capilares</h2>
+          <p class="lead text-muted">Los mejores productos para el cuidado de tu cabello</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img th:src="@{/img/producto-cera.jpg}" class="card-img-top" alt="Cera para cabello">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">CERA PROFESIONAL</h5>
+                <p class="card-text">
+                  Cera de alta calidad para un acabado natural con fijación duradera.
+                  Ideal para estilos texturizados.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="h5 text-primary mb-0">$25.99</span>
+                  <small class="text-muted">En stock</small>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" data-type="product"
+                  data-product="cera">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img th:src="@{/img/producto-polvotexturizante.jpg}" class="card-img-top" alt="Polvo texturizante">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">POLVO TEXTURIZANTE</h5>
+                <p class="card-text">
+                  Polvo voluminizador que aporta textura y cuerpo al cabello
+                  sin apelmazarlo.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="h5 text-primary mb-0">$32.99</span>
+                  <small class="text-muted">En stock</small>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" data-type="product"
+                  data-product="polvo">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img th:src="@{/img/producto-gel.jpg}" class="card-img-top" alt="Gel fijador">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">GEL ULTRA FIJACIÓN</h5>
+                <p class="card-text">
+                  Gel de fijación extrema para peinados que requieren
+                  máximo control y duración.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="h5 text-primary mb-0">$18.99</span>
+                  <small class="text-muted">En stock</small>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal" data-type="product"
+                  data-product="gel">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4 mt-2">
+          <div class="d-flex justify-content-center align-items-center">
+            <a th:href="@{/productos}" class="btn btn-primary btn-lg">
+              <i class="bi bi-shop me-2"></i>
+              Ver todos los productos
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Ubicación -->
+    <section id="ubicacion" class="py-5">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="section-title display-6 fw-bold">Encuéntranos</h2>
+          <p class="lead text-muted">Visítanos en nuestras ubicaciones</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <iframe class="google-map w-100" height="350" style="border:0; border-radius: 15px;"
+              th:src="@{https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2595.065641062665!2d-122.4230416990949!3d37.80335401520422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858127459fabad%3A0x808ba520e5e9edb7!2sFrancisco%20Park!5e1!3m2!1sen!2sth!4v1684340239744!5m2!1sen!2sth}"
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                      Local Principal
+                    </h5>
+                    <p class="card-text">
+                      Nuestro local principal cuenta con las mejores instalaciones
+                      y el equipo más experimentado para brindarte el mejor servicio.
+                    </p>
+                    <hr>
+                    <div class="contact-info">
+                      <p class="mb-2">
+                        <i class="bi bi-telephone-fill text-primary me-2"></i>
+                        <a href="tel:999888777" class="text-decoration-none">999-888-777</a>
+                      </p>
+                      <p class="mb-0">
+                        <i class="bi bi-envelope-fill text-primary me-2"></i>
+                        <a href="mailto:info@legacybarbershop.com" class="text-decoration-none">
+                          info@legacybarbershop.com
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <i class="bi bi-house-fill text-primary me-2"></i>
+                      Servicio a Domicilio
+                    </h5>
+                    <p class="card-text">
+                      Llevamos nuestro servicio profesional hasta la comodidad de tu hogar.
+                      Agenda tu cita domiciliaria.
+                    </p>
+                    <hr>
+                    <div class="contact-info">
+                      <p class="mb-2">
+                        <i class="bi bi-telephone-fill text-primary me-2"></i>
+                        <a href="tel:999888776" class="text-decoration-none">999-888-776</a>
+                      </p>
+                      <p class="mb-0">
+                        <i class="bi bi-envelope-fill text-primary me-2"></i>
+                        <a href="mailto:domicilio@legacybarbershop.com" class="text-decoration-none">
+                          domicilio@legacybarbershop.com
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer th:replace="~{components/footer :: footer}"></footer>
+
+  <!-- Modal de Autenticación -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="authModalLabel">Iniciar Sesión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulario de Login -->
+          <div id="loginForm">
+            <div class="text-center mb-4">
+              <p class="text-muted">Ingresa tus credenciales para acceder</p>
+            </div>
+            <form th:action="@{/login}" method="post">
+              <p th:if="${param.error}">Credenciales incorrectas</p>
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <div class="form-floating">
+                    <input type="email" name="username" class="form-control" id="loginEmail"
+                      placeholder="correo@ejemplo.com" required>
+                    <label for="loginEmail">Correo Electrónico</label>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <div class="form-floating">
+                    <input type="password" name="password" class="form-control" id="loginPassword"
+                      placeholder="Contraseña" required>
+                    <label for="loginPassword">Contraseña</label>
+                  </div>
+                </div>
+              </div>
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="bi bi-box-arrow-in-right me-2"></i>
+                  Iniciar Sesión
+                </button>
+              </div>
+              <div class="text-center">
+                <p class="mb-0">
+                  ¿No tienes cuenta?
+                  <a role="button" class="fw-bold text-decoration-none" onclick="showRegisterForm()">
+                    Regístrate aquí
+                  </a>
+                </p>
+                <a class="small text-muted">¿Olvidaste tu contraseña?</a>
+              </div>
+            </form>
+          </div>
+
+          <!-- Formulario de Registro -->
+          <div id="registerForm" style="display: none;">
+            <div class="text-center mb-4">
+              <p class="text-muted">Únete a la familia Legacy</p>
+            </div>
+            <form th:action="@{/registro}" th:object="${userDTO}" method="post">
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <div class="form-floating">
+                    <input type="email" name="username" th:field="*{username}" class="form-control" id="registerEmail"
+                      placeholder="correo@ejemplo.com" required>
+                    <label for="registerEmail">Correo Electrónico</label>
+                  </div>
+                  <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <div class="form-floating">
+                    <input type="password" name="password" th:field="*{password}" class="form-control"
+                      id="registerPassword" placeholder="Contraseña" required>
+                    <label for="registerPassword">Contraseña</label>
+                  </div>
+                  <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+              </div>
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="bi bi-person-plus me-2"></i>
+                  Crear Cuenta
+                </button>
+              </div>
+              <div class="text-center">
+                <p class="mb-0">
+                  ¿Ya tienes cuenta?
+                  <a role="button" class="fw-bold text-decoration-none" onclick="showLoginForm()">
+                    Inicia sesión aquí
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Información (Servicios y Productos) -->
+  <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="infoModalLabel">Información</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="infoModalBody">
+          <!-- El contenido se carga dinámicamente con JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <!-- JavaScript personalizado -->
+  <script th:src="@{/js/auth.js}"></script>
+  <script th:src="@{/js/index.js}"></script>
+</body>
+
+</html>

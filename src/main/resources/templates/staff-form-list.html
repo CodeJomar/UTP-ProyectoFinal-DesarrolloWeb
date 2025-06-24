@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legacy | 💈 BarberShop 💈</title>
+
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css}" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css}">
+
+  <link rel="stylesheet" th:href="@{/css/staff-extra.css}">
+
+</head>
+
+<body>
+  <nav th:replace="~{components/nav :: nav}"></nav>
+
+  <div class="container mb-5">
+    <div class="admin-container">
+      <div class="admin-header">
+        <h1>
+          <i class="bi bi-people-fill me-3"></i>
+          Gestión de Empleados
+        </h1>
+        <p class="mb-0 mt-2">Administra usuarios y empleados del sistema</p>
+      </div>
+
+      <div class="form-section">
+        <ul class="nav nav-tabs" id="adminTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" th:href="@{/usuario-registro}">
+              <i class="bi bi-person me-2"></i>Registrar Usuario
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" th:href="@{/staff-registro}" aria-current="page">
+              <i class="bi bi-person-badge me-2"></i>Registrar Empleado
+            </a>
+          </li>
+        </ul>
+
+        <div id="alert-container"></div>
+
+        <div class="tab-content" id="adminTabContent">
+          <div class="tab-pane fade show active" id="empleado" role="tabpanel">
+            <form method="post" th:action="@{/staff-registro/guardar}" th:object="${empleadoDto}"
+              id="empleadoForm" class="needs-validation">
+              <input type="hidden" th:field="*{id}" />
+
+              <h5 class="mb-3"><i class="bi bi-person-circle me-2"></i>Crear Empleado</h5>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input th:field="*{username}" type="email" class="form-control" id="empleado_usuario_email"
+                      placeholder="correo@ejemplo.com" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
+                    <label for="empleado_usuario_email"><i class="bi bi-envelope me-2"></i>Email</label>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Email
+                      inválido</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input th:field="*{password}" type="password" class="form-control" id="empleado_usuario_clave"
+                           placeholder="Contraseña" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                    <label for="empleado_usuario_clave"><i class="bi bi-lock me-2"></i>Contraseña</label>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">La contraseña no debe estar en blanco.</div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="my-4">
+              <h5 class="mb-3"><i class="bi bi-briefcase me-2"></i>Datos del Empleado</h5>
+
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input th:field="*{fechaContrato}" type="date" class="form-control" id="empleado_fecha_contrato">
+                    <label for="empleado_fecha_contrato"><i class="bi bi-calendar-check me-2"></i>Fecha de
+                      Contrato</label>
+                    <div class="form-text ms-3 mb-0">
+                      <p><small th:text="${empleadoDto.fechaContrato}"></small></p>
+                    </div>
+                    <div class="invalid-feedback">Por favor ingrese la fecha de contrato.</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input th:field="*{fechaDespido}" type="date" class="form-control" id="empleado_fecha_despido">
+                    <label for="empleado_fecha_despido"><i class="bi bi-calendar-x me-2"></i>Finalización Contrato</label>
+                    <div class="form-text ms-3 mb-0">
+                      <p><small th:text="${empleadoDto.fechaDespido}"></small></p>
+                    </div>
+                    <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mt-3">
+                      <ul class="mb-0">
+                        <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <select th:field="*{estado}" class="form-select" id="empleado_estado">
+                      <option value="">Selecciona un estado</option>
+                      <option th:each="e : ${estados}" th:value="${e}" th:text="${e.displayName}">
+                      </option>
+                    </select>
+                    <label for="empleado_estado"><i class="bi bi-shield-check me-2"></i>Estado del Empleado</label>
+                    <div class="invalid-feedback">Por favor seleccione un estado.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input th:field="*{salario}" type="number" class="form-control" id="empleado_salario"
+                      placeholder="Salario" step="0.01" th:classappend="${#fields.hasErrors('salario')} ? 'is-invalid'">
+                    <label for="empleado_salario"><i class="bi bi-currency-dollar me-2"></i>Salario Mensual</label>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('salario')}" th:errors="*{salario}">Salario
+                      inválido</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="reset" class="btn btn-outline-secondary">
+                  <i class="bi bi-arrow-clockwise me-2"></i>Limpiar
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-guardar-empleado">
+                  <i class="bi bi-save me-2"></i>Guardar Empleado
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4" id="tablasContainer">
+      <div class="col-12" id="tablaEmpleados">
+        <div class="table-container">
+          <div class="table-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-person-badge me-2"></i>Lista de Empleados</span>
+            <span class="badge bg-light text-dark" id="total-empleados" th:text="'Total: ' + ${totalEmpleados}">Total:
+              0</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Email</th>
+                  <th>Salario</th>
+                  <th>F. Contrato</th>
+                  <th>F. Finalización</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="empleados-table">
+                <tr th:each="e : ${empleados}">
+                  <td th:text="${e.id}"></td>
+                  <td th:text="${e.usuarioEmpleado.username}"></td>
+                  <td th:text="${e.salario}"></td>
+                  <td th:text="${#temporals.format(e.fechaContrato, 'dd/MM/yyyy')}"></td>
+                  <td th:text="${#temporals.format(e.fechaDespido, 'dd/MM/yyyy')}"></td>
+                  <td>
+                    <span th:text="${e.estado.displayName}" th:class="'badge ' + ${e.estado.cssClass}"></span>
+                  </td>
+                  <td>
+                    <a th:href="@{/staff-registro/editar(id=${e.id})}"
+                      class="btn btn-sm btn-outline-primary btn-action" title="Editar">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:href="@{/staff-registro/eliminar(id=${e.id})}"
+                      class="btn btn-sm btn-outline-danger btn-action" title="Eliminar"
+                      onclick="return confirm('¿Estás seguro que deseas eliminar este empleado?');">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script th:src="@{/js/auth.js}"></script>
+
+</body>
+
+</html>

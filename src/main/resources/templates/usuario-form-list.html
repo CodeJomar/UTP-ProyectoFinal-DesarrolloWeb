@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legacy | 💈 BarberShop 💈</title>
+
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css}" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css}">
+
+  <link rel="stylesheet" th:href="@{/css/staff-extra.css}">
+</head>
+
+<body>
+  <nav th:replace="~{components/nav :: nav}"></nav>
+
+  <div class="container mb-5">
+    <div class="admin-container">
+      <div class="admin-header">
+        <h1>
+          <i class="bi bi-people-fill me-3"></i>
+          Gestión de Empleados
+        </h1>
+        <p class="mb-0 mt-2">Administra usuarios y empleados del sistema</p>
+      </div>
+
+      <div class="form-section">
+        <ul class="nav nav-tabs" id="adminTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" th:href="@{/usuario-registro}" aria-current="page">
+              <i class="bi bi-person me-2"></i>Registrar Usuario
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" th:href="@{/staff-registro}">
+              <i class="bi bi-person-badge me-2"></i>Registrar Empleado
+            </a>
+          </li>
+        </ul>
+
+        <div id="alert-container"></div>
+
+        <div class="tab-content" id="adminTabContent">
+          <div class="tab-pane fade show active" id="usuario" role="tabpanel">
+            <form method="post" th:action="@{/usuario-registro/guardarUsuario}" th:object="${usuario}" id="usuarioForm"
+              class="needs-validation">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <input type="hidden" th:field="*{id}" />
+                  <div class="form-floating">
+                    <input th:field="*{email}" type="email" class="form-control" id="email"
+                      placeholder="correo@ejemplo.com" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                    <label for="email">
+                      <i class="bi bi-envelope me-2"></i>Email
+                    </label>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error email
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input th:field="*{clave}" type="password" class="form-control" id="clave" placeholder="Contraseña"
+                      th:classappend="${#fields.hasErrors('clave')} ? 'is-invalid'">
+                    <label for="clave">
+                      <i class="bi bi-lock me-2"></i>Contraseña
+                    </label>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('clave')}" th:errors="*{clave}"></div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-floating">
+                    <input th:field="*{nombre}" type="text" class="form-control" id="nombre"
+                      placeholder="Nombre completo" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+                    <label for="nombre">
+                      <i class="bi bi-person me-2"></i>Nombre Completo
+                    </label>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="reset" class="btn btn-outline-secondary">
+                  <i class="bi bi-arrow-clockwise me-2"></i>Limpiar
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-guardar-usuario">
+                  <i class="bi bi-save me-2"></i>Guardar Usuario
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4" id="tablasContainer">
+      <div class="col-12" id="tablaUsuarios">
+        <div class="table-container">
+          <div class="table-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-people me-2"></i>Lista de Usuarios</span>
+            <span class="badge bg-light text-dark" id="total-usuarios" th:text="'Total: ' + ${totalUsuarios}">Total:
+              0</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="usuarios-table">
+                <tr th:each="u : ${usuarios}">
+                  <td th:text="${u.id}"></td>
+                  <td th:text="${u.nombre}"></td>
+                  <td th:text="${u.email}"></td>
+                  <td>
+                    <a th:href="@{/usuario-registro/editarUsuario(id=${u.id})}"
+                      class="btn btn-sm btn-outline-primary btn-action" title="Editar">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <a th:href="@{/usuario-registro/eliminarUsuario(id=${u.id})}"
+                      class="btn btn-sm btn-outline-danger btn-action" title="Eliminar"
+                      onclick="return confirm('¿Estás seguro que deseas eliminar este usuario?');">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script th:src="@{/js/auth.js}"></script>
+
+</body>
+
+</html>
