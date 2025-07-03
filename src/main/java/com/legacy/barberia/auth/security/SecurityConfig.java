@@ -32,7 +32,7 @@ public class SecurityConfig {
                 // Páginas públicas (/registro es el metodo de POST)
                 .requestMatchers("/", "/registro").permitAll()
                 // Definición de roles
-                .requestMatchers("/staff", "/citas", "/productos")
+                .requestMatchers("/staff", "/citas", "/productos", "/perfil")
                 .hasAnyAuthority("ROLE_USER", "ROLE_EMPLOYEE", "ROLE_ADMIN")
                 
                 .requestMatchers("/citas-listado", "/productos-registro")

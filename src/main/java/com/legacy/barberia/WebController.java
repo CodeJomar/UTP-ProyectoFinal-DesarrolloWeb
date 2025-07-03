@@ -23,6 +23,11 @@ public class WebController {
     public String accesoDenegado() {
         return "acceso-denegado";
     }
+    
+    @GetMapping("/perfil")
+    public String perfilUser() {
+        return "Perfil-User";
+    }
 
 
 //    @GetMapping("/citas")

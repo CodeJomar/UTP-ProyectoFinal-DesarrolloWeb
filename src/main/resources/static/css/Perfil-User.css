@@ -1,0 +1,63 @@
+@import './index.css';
+
+body {
+  padding-top: 80px;
+  background-color: #f8f9fa;
+}
+
+        .perfil-container {
+          max-width: 700px;
+          margin: auto;
+          background-color: #ebe4e4;
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .titulo-perfil {
+          text-align: center;
+          margin-bottom: 30px;
+          color: #000000;
+          font-weight: bold;
+          text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .perfil-info p {
+          font-size: 1.1rem;
+          color: #000000;
+          margin-bottom: 10px;
+        }
+
+        .perfil-info p i {
+         color: #249771;
+          margin-right: 8px;
+        }
+
+        .btn-editar {
+          display: block;
+          margin: 30px auto 0 auto;
+          padding: 10px 25px;
+          font-size: 1rem;
+        }
+
+        .modal-header {
+          background-color: #000000;
+          color: white;
+        }
+
+        .modal-title {
+          font-weight: bold;
+        }
+
+        .form-label {
+          font-weight: 500;
+        }
+
+        .modal-footer .btn-success {
+          background-color: #298653;
+        }
+
+        .modal-footer .btn-success:hover {
+          background-color:#1d5a35;
+
+        }

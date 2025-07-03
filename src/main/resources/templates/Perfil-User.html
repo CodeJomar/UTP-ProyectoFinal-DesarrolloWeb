@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Legacy | 💈 BarberShop 💈</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous"><!--Iconos-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="/css/Perfil-User.css">
+    <script src="/js/Perfil-User.js" defer></script>
+</head>
+<body>
+
+<nav th:replace="~{components/nav :: nav}"></nav>
+
+<div class="container my-5">
+    <div class="perfil-container">
+        <h2 class="titulo-perfil"><i class="fas fa-user-circle me-2"></i>Perfil del Cliente</h2>
+
+        <div class="row perfil-info">
+            <div class="col-12">
+                <p>
+                    <i class="bi bi-person"></i>
+                    <strong>Nombre:</strong>
+                    <Span id="perfilname"> Nicolas Suarez </Span>
+                </p>
+                <p>
+                    <i class="bi bi-envelope"></i>
+                    <strong>Correo:</strong>
+                    <span id="perfilcorreo"> nicolas_suares@gmail.com </span>
+                </p>
+                <p>
+                    <i class="bi bi-telephone"></i>
+                    <strong>Teléfono:</strong>
+                    <span id="perfilnumber"> 987 650 321 </span>
+                </p>
+                <p>
+                    <i class="bi bi-house"></i>
+                    <strong>Dirección:</strong>
+                    <span id="perfiladdress"> Av. Paseo de la Republica 279, Lima </span>
+                </p>
+            </div>
+        </div>
+
+        <button class="btn btn-primary btn-editar" data-bs-toggle="modal" data-bs-target="#editarPerfilModal">
+            <i class="fas fa-edit me-1"></i>Editar Perfil
+        </button>
+    </div>
+</div>
+
+<footer th:replace="~{components/footer :: footer}"></footer>
+
+<!-- Modal para editar perfil -->
+<div class="modal fade" id="editarPerfilModal" tabindex="-1" aria-labelledby="editarPerfilModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarPerfilModalLabel"><i class="fas fa-user-edit me-2"></i>Editar Perfil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre completo</label>
+                    <input type="text" class="form-control" id="nombre" value="Ingrese su nombre ">
+                </div>
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="correo" value="Ingrese su correo ">
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" value="999 999 999">
+                </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" value="Ingrese su dirección ">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="guardarBtn">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- JS Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
