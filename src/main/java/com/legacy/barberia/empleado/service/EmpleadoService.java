@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -54,6 +55,32 @@ public class EmpleadoService {
         return empleadoRepository.save(empleado);
     }
     
+    public Empleado actualizarEmpleado(RegisEmpleadoDTO dto) {
+        Empleado empleadoExistente = empleadoRepository.findById(dto.getId())
+            .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+        
+        User usuarioExistente = empleadoExistente.getUsuarioEmpleado();
+        
+        if (!usuarioExistente.getUsername().equals(dto.getUsername())) {
+            if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
+                throw new IllegalArgumentException("El usuario ya está registrado");
+            }
+            usuarioExistente.setUsername(dto.getUsername());
+        }
+        if (StringUtils.hasText(dto.getPassword())) {
+            usuarioExistente.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+        
+        userRepository.save(usuarioExistente);
+        
+        empleadoExistente.setFechaContrato(dto.getFechaContrato());
+        empleadoExistente.setFechaDespido(dto.getFechaDespido());
+        empleadoExistente.setSalario(dto.getSalario());
+        empleadoExistente.setEstado(dto.getEstado());
+        
+        return empleadoRepository.save(empleadoExistente);
+    }
+    
     public List<Empleado> listarEmpleados() {
         return empleadoRepository.findAll();
     }
@@ -70,18 +97,9 @@ public class EmpleadoService {
         empleadoRepository.deleteById(id);
     }
     
-    public Empleado actualizarEmpleado(Long id, Empleado datos) {
-        Empleado existente = empleadoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
-        
-        existente.setFechaContrato(datos.getFechaContrato());
-        existente.setFechaDespido(datos.getFechaDespido());
-        existente.setSalario(datos.getSalario());
-        existente.setEstado(datos.getEstado());
-        
-        return empleadoRepository.save(existente);
+    public long contarEmpleados() {
+        return empleadoRepository.count();
     }
-    
     // Evento con Clase ENUM
     @Scheduled(cron = "0 0 0 * * *") // Todos los días a la medianoche
     public void actualizarEstadosEmpleados() {

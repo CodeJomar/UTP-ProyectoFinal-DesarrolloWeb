@@ -59,6 +59,7 @@ public class CitaController {
         redirectAttributes.addFlashAttribute("success", "Cita registrada correctamente.");
         return "redirect:/citas";
     }
+    
     @PostMapping("/eliminar")
     public String eliminarCita(@RequestParam Long id){
         citaService.eliminarCita(id);
