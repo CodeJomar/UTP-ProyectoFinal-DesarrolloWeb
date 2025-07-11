@@ -17,4 +17,5 @@ public class RegisUserDTO {
     
     @NotBlank(message = "Este campo es obligatorio")
     private String password;
+    
 }

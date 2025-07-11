@@ -24,10 +24,10 @@ public class WebController {
         return "acceso-denegado";
     }
     
-    @GetMapping("/perfil")
-    public String perfilUser() {
-        return "Perfil-User";
-    }
+//    @GetMapping("/perfil")
+//    public String perfilUser() {
+//        return "Perfil-User";
+//    }
 
 
 //    @GetMapping("/citas")

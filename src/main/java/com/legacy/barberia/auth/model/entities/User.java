@@ -1,9 +1,11 @@
 package com.legacy.barberia.auth.model.entities;
 
+import com.legacy.barberia.perfil.model.Perfil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +29,11 @@ public class User implements UserDetails {
     
     @Column(nullable = false)
     private String password;
+    
+    // Si tienes una relación bidireccional con Perfil, agrégala aquí
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude // Excluir de toString para evitar referencia circular
+    private Perfil perfil;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)

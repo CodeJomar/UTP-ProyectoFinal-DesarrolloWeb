@@ -11,7 +11,7 @@
 
   <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css}">
   <link rel="stylesheet" th:href="@{/css/staff-extra.css}">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
 
 </head>
 
@@ -83,15 +83,13 @@
               <div class="row g-3">
                 <div class="col-md-4">
                   <div class="form-floating">
-                    <input th:field="*{fechaContrato}"
-                           type="date"
-                           class="form-control"
-                           id="empleado_fecha_contrato"
-                           th:classappend="${#fields.hasErrors('fechaContrato')} ? 'is-invalid'">
+                    <input th:field="*{fechaContrato}" type="date" class="form-control" id="empleado_fecha_contrato"
+                      th:classappend="${#fields.hasErrors('fechaContrato')} ? 'is-invalid'">
                     <label for="empleado_fecha_contrato">
                       <i class="bi bi-calendar-check me-2"></i>Fecha de Contrato
                     </label>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaContrato')}" th:errors="*{fechaContrato}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaContrato')}"
+                      th:errors="*{fechaContrato}">
                       Por favor ingrese la fecha de contrato.
                     </div>
                   </div>
@@ -99,15 +97,13 @@
 
                 <div class="col-md-4">
                   <div class="form-floating">
-                    <input th:field="*{fechaDespido}"
-                           type="date"
-                           class="form-control"
-                           id="empleado_fecha_despido"
-                           th:classappend="${#fields.hasErrors('fechaDespido')} ? 'is-invalid'">
+                    <input th:field="*{fechaDespido}" type="date" class="form-control" id="empleado_fecha_despido"
+                      th:classappend="${#fields.hasErrors('fechaDespido')} ? 'is-invalid'">
                     <label for="empleado_fecha_despido">
                       <i class="bi bi-calendar-x me-2"></i>Finalización Contrato
                     </label>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaDespido')}" th:errors="*{fechaDespido}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaDespido')}"
+                      th:errors="*{fechaDespido}">
                       Por favor ingrese la fecha de finalización.
                     </div>
                   </div>

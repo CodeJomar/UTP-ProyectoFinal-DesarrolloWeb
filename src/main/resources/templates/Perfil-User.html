@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Legacy | 💈 BarberShop 💈</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous"><!--Iconos-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <link rel="stylesheet" href="/css/Perfil-User.css">
-    <script src="/js/Perfil-User.js" defer></script>
 </head>
 <body>
 
@@ -24,22 +28,22 @@
                 <p>
                     <i class="bi bi-person"></i>
                     <strong>Nombre:</strong>
-                    <Span id="perfilname"> Nicolas Suarez </Span>
+                    <span id="perfilname" th:text="${perfil.nombre != null ? perfil.nombre : 'No especificado'}">Usuario</span>
                 </p>
                 <p>
                     <i class="bi bi-envelope"></i>
                     <strong>Correo:</strong>
-                    <span id="perfilcorreo"> nicolas_suares@gmail.com </span>
+                    <span id="perfilcorreo" th:text="${perfil.user != null ? perfil.user.username : 'No disponible'}">usuario@dominio.com</span>
                 </p>
                 <p>
                     <i class="bi bi-telephone"></i>
                     <strong>Teléfono:</strong>
-                    <span id="perfilnumber"> 987 650 321 </span>
+                    <span id="perfilnumber" th:text="${perfil.telefono != null ? perfil.telefono : 'No especificado'}">987 650 321</span>
                 </p>
                 <p>
                     <i class="bi bi-house"></i>
                     <strong>Dirección:</strong>
-                    <span id="perfiladdress"> Av. Paseo de la Republica 279, Lima </span>
+                    <span id="perfiladdress" th:text="${perfil.direccion != null ? perfil.direccion : 'No especificada'}">Av. Paseo de la Republica 279, Lima</span>
                 </p>
             </div>
         </div>
@@ -55,39 +59,70 @@
 <!-- Modal para editar perfil -->
 <div class="modal fade" id="editarPerfilModal" tabindex="-1" aria-labelledby="editarPerfilModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="modal-content">
+        <form class="modal-content" method="post" th:action="@{/perfil/guardar}" th:object="${perfil}">
             <div class="modal-header">
-                <h5 class="modal-title" id="editarPerfilModalLabel"><i class="fas fa-user-edit me-2"></i>Editar Perfil</h5>
+                <h5 class="modal-title" id="editarPerfilModalLabel">
+                    <i class="fas fa-user-edit me-2"></i>Editar Perfil
+                </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
+
+                <input type="hidden" th:field="*{id}" />
+
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre completo</label>
-                    <input type="text" class="form-control" id="nombre" value="Ingrese su nombre ">
+                    <label for="nombre" class="form-label">Nombre de Usuario</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        th:field="*{nombre}"
+                        placeholder="Ingrese su nombre"
+                        maxlength="15"
+                    >
                 </div>
                 <div class="mb-3">
                     <label for="correo" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="correo" value="Ingrese su correo ">
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="correo"
+                        th:value="${perfil.user != null ? perfil.user.username : ''}"
+                        readonly
+                    >
                 </div>
                 <div class="mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" value="999 999 999">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="telefono"
+                        th:field="*{telefono}"
+                        placeholder="999-999-999"
+                    >
                 </div>
                 <div class="mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" value="Ingrese su dirección ">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="direccion"
+                        th:field="*{direccion}"
+                        placeholder="Ingrese su dirección"
+                    >
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="guardarBtn">Guardar cambios</button>
+                <button type="submit" class="btn btn-success" id="guardarBtn">Guardar cambios</button>
             </div>
         </form>
     </div>
 </div>
 
-
+<script th:src="@{/js/Perfil-User.js}"></script>
 <!-- JS Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script></body>
 </html>

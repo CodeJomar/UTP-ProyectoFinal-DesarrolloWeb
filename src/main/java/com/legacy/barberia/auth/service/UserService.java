@@ -6,6 +6,7 @@ import com.legacy.barberia.auth.model.entities.User;
 import com.legacy.barberia.auth.model.enums.RoleList;
 import com.legacy.barberia.auth.repository.RoleRepository;
 import com.legacy.barberia.auth.repository.UserRepository;
+import com.legacy.barberia.perfil.model.Perfil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

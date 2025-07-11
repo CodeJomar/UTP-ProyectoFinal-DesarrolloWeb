@@ -1,34 +1,24 @@
 package com.legacy.barberia.producto.service;
 
-import com.legacy.barberia.producto.model.CategoriaProducto;
-import com.legacy.barberia.producto.model.EstadoProducto;
 import com.legacy.barberia.producto.model.Producto;
-import com.legacy.barberia.producto.repository.CategoriaProductoRepository;
 import com.legacy.barberia.producto.repository.ProductoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductoService {
     
-    @Autowired
-    private ProductoRepository productoRepository;
+    private final ProductoRepository productoRepository;
     
-    @Autowired
-    private CategoriaProductoRepository categoriaProductoRepository;
-    
-    public Producto guardarProducto(Producto producto) {
-        return productoRepository.save(producto);
+    public void guardarProducto(Producto producto) {
+        productoRepository.save(producto);
     }
     
     public List<Producto> listarProductos() {
         return productoRepository.findAll();
-    }
-    
-    public List<CategoriaProducto> listarCategorias() {
-        return categoriaProductoRepository.findAll();
     }
     
     public void eliminarProducto(Long id) {

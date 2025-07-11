@@ -1,8 +1,17 @@
 package com.legacy.barberia.producto.model;
 
+import com.legacy.barberia.auth.model.entities.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.w3c.dom.Text;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "productos")
 public class Producto {
@@ -11,99 +20,40 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
-    private CategoriaProducto categoria;
-    
+    @Column(nullable = false)
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 100, message = "El nombre no puede exceder 100 caracteres")
     private String nombre;
     
+    @Column(nullable = false)
+    @NotBlank(message = "La marca es obligatoria")
+    @Size(max = 50, message = "La marca no puede exceder 50 caracteres")
     private String marca;
     
-    private double precio;
+    @Column(nullable = false)
+    @NotNull(message = "El precio es obligatorio")
+    @DecimalMin(value = "0.01", message = "El precio debe ser mayor a 0")
+    @DecimalMax(value = "9999.99", message = "El precio no puede exceder 9999.99")
+    private Double precio;
     
-    private int stock;
+    @Column(nullable = false)
+    @NotNull(message = "El stock es obligatorio")
+    @Min(value = 0, message = "El stock no puede ser negativo")
+    @Max(value = 999, message = "El stock no puede exceder 999")
+    private Integer stock;
     
     @Column(columnDefinition = "TEXT")
+    @Size(max = 500, message = "La descripción no puede exceder 500 caracteres")
     private String descripcion;
     
     @Enumerated(EnumType.STRING)
     private EstadoProducto estado;
     
-    public Producto() {
-    }
+    @Enumerated(EnumType.STRING)
+    private CategoriaProducto categoria;
     
-    public Producto(Long id, CategoriaProducto categoria, String nombre, String marca, double precio, int stock, String descripcion, EstadoProducto estado) {
-        this.id = id;
-        this.categoria = categoria;
-        this.nombre = nombre;
-        this.marca = marca;
-        this.precio = precio;
-        this.stock = stock;
-        this.descripcion = descripcion;
-        this.estado = estado;
-    }
-    
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public CategoriaProducto getCategoria() {
-        return categoria;
-    }
-    
-    public void setCategoria(CategoriaProducto categoria) {
-        this.categoria = categoria;
-    }
-    
-    public String getNombre() {
-        return nombre;
-    }
-    
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    
-    public String getMarca() {
-        return marca;
-    }
-    
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-    
-    public double getPrecio() {
-        return precio;
-    }
-    
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-    
-    public EstadoProducto getEstado() {
-        return estado;
-    }
-    
-    public void setEstado(EstadoProducto estado) {
-        this.estado = estado;
-    }
-    
-    public int getStock() {
-        return stock;
-    }
-    
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-    
-    public String getDescripcion() {
-        return descripcion;
-    }
-    
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creador_id", nullable = false)
+    @ToString.Exclude
+    private User creador;
 }

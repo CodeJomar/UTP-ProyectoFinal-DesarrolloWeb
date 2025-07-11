@@ -27,10 +27,8 @@ public class SecurityConfig {
         return http
             .authorizeHttpRequests(auth -> auth
                 // Recursos estáticos
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                .requestMatchers("/error").permitAll()
-                // Páginas públicas (/registro es el metodo de POST)
-                .requestMatchers("/", "/registro").permitAll()
+                .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/error", "/registro").permitAll()
+                
                 // Definición de roles
                 .requestMatchers("/staff", "/citas", "/productos", "/perfil")
                 .hasAnyAuthority("ROLE_USER", "ROLE_EMPLOYEE", "ROLE_ADMIN")
@@ -57,7 +55,7 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/?logoutExitoso")
+                .logoutSuccessUrl("/")
                 .permitAll()
             )
             .userDetailsService(userDetailsService)

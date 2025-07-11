@@ -1,5 +1,11 @@
 package com.legacy.barberia.producto.model;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum EstadoProducto {
     STOCK("Stock", "stock-available"),
     AGOTADO("Agotado", "stock-out");
@@ -7,16 +13,4 @@ public enum EstadoProducto {
     private final String displayName;
     private final String cssClass;
     
-    EstadoProducto(String displayName, String cssClass) {
-        this.displayName = displayName;
-        this.cssClass = cssClass;
-    }
-    
-    public String getDisplayName() {
-        return displayName;
-    }
-    
-    public String getCssClass() {
-        return cssClass;
-    }
 }
