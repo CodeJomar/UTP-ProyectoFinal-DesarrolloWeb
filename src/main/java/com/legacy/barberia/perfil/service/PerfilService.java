@@ -38,8 +38,8 @@ public class PerfilService {
             .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
         
         Perfil perfil = perfilRepository.findByUserId(user.getId())
-            .orElseThrow(() -> new RuntimeException("Perfil no encontrado"));
-        
+                .orElseThrow(() -> new RuntimeException("Perfil no encontrado"));
+
         perfil.setNombre(perfilForm.getNombre() != null ? perfilForm.getNombre().trim() : "");
         perfil.setTelefono(perfilForm.getTelefono() != null ? perfilForm.getTelefono().trim() : "");
         perfil.setDireccion(perfilForm.getDireccion() != null ? perfilForm.getDireccion().trim() : "");

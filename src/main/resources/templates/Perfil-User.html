@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" href="/css/Perfil-User.css">
 </head>
-<body>
+<body th:attr="data-mostrar-modal=${mostrarModal}">
 
 <nav th:replace="~{components/nav :: nav}"></nav>
 
@@ -72,6 +72,7 @@
 
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre de Usuario</label>
+                    <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
                     <input
                         type="text"
                         class="form-control"
@@ -81,18 +82,10 @@
                         maxlength="15"
                     >
                 </div>
-                <div class="mb-3">
-                    <label for="correo" class="form-label">Correo electrónico</label>
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="correo"
-                        th:value="${perfil.user != null ? perfil.user.username : ''}"
-                        readonly
-                    >
-                </div>
+
                 <div class="mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
+                    <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
                     <input
                         type="text"
                         class="form-control"
@@ -103,6 +96,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
+                    <div class="text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></div>
                     <input
                         type="text"
                         class="form-control"
