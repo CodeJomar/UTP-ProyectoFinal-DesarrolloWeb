@@ -49,28 +49,35 @@
         <div class="col-lg-6 col-xl-3" th:each="e : ${empleados}">
           <div class="staff-card">
             <div class="staff-body">
-              <h3 class="staff-name" th:text="${e.usuario.nombre}"></h3>
+
+              <!-- Nombre del empleado -->
+              <h3 class="staff-name">Trabajador de Barbero Profesional</h3>
+
+              <!-- Rol fijo -->
               <span class="staff-role">Barbero</span>
 
+              <!-- Descripción estática -->
               <p class="staff-description">
                 Especialista en cortes clásicos y modernos con más de 8 años de experiencia.
-                Experto en técnicas de degradado y estilos personalizados.
               </p>
 
+              <!-- Acciones (solo visuales, no funcionales) -->
               <div class="staff-actions">
-                <a href="https://wa.me/999888777" class="staff-contact-btn btn-whatsapp" target="_blank">
-                  <i class="bi bi-whatsapp"></i>WhatsApp
-                </a>
-                <a href="mailto:carlos@legacybarbershop.com" class="staff-contact-btn btn-email">
-                  <i class="bi bi-envelope"></i>Email
-                </a>
+                <button class="staff-contact-btn btn-whatsapp" disabled>
+                  <i class="bi bi-whatsapp"></i> WhatsApp
+                </button>
+                <button class="staff-contact-btn btn-email" disabled>
+                  <i class="bi bi-envelope"></i> Email
+                </button>
               </div>
 
+              <!-- Mostrar solo el correo -->
               <div class="staff-info">
-                <i class="bi bi-geo-alt-fill"></i>
-                <span th:text="${e.usuario.email}"></span>
+                <i class="bi bi-envelope-fill"></i>
+                <span th:text="${e.usuarioEmpleado.username}">correo@ejemplo.com</span>
               </div>
 
+              <!-- Redes sociales solo como íconos -->
               <div class="staff-social">
                 <a href="#" class="social-link" aria-label="Facebook">
                   <i class="bi bi-facebook"></i>
@@ -82,9 +89,11 @@
                   <i class="bi bi-linkedin"></i>
                 </a>
               </div>
+
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
