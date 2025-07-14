@@ -1,7 +1,8 @@
 package com.legacy.barberia.validaciones;
 
-import com.legacy.barberia.usuario.model.Usuario;
-import com.legacy.barberia.usuario.repository.UsuarioRepository;
+import com.legacy.barberia.auth.model.dtos.RegisUserDTO;
+import com.legacy.barberia.auth.model.entities.User;
+import com.legacy.barberia.auth.repository.UserRepository;
 import com.legacy.barberia.validaciones.anotaciones.EmailUnico;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -11,23 +12,23 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class EmailUnicoValidator implements ConstraintValidator<EmailUnico, Usuario> {
+public class EmailUnicoValidator implements ConstraintValidator<EmailUnico, RegisUserDTO> {
     
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository userRepository;
     
     @Override
-    public boolean isValid(Usuario usuario, ConstraintValidatorContext context) {
-        if (usuario == null || usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
+    public boolean isValid(RegisUserDTO usuario, ConstraintValidatorContext context) {
+        if (usuario == null || usuario.getUsername() == null || usuario.getUsername().isEmpty()) {
             return true;
         }
         
-        String email = usuario.getEmail();
-        Long userId = usuario.getId();
+        String username = usuario.getUsername();
+        String userId = usuario.getId();
         
-        Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(email);
+        Optional<User> usuarioExistente = userRepository.findByUsername(username);
         
-        if (usuarioRepository == null) {
+        if (userRepository == null) {
             return true;
         }
         
@@ -37,7 +38,7 @@ public class EmailUnicoValidator implements ConstraintValidator<EmailUnico, Usua
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(context
                         .getDefaultConstraintMessageTemplate())
-                        .addPropertyNode("email")
+                        .addPropertyNode("username")
                         .addConstraintViolation();
             }
             System.out.println(esMismoUsuario);

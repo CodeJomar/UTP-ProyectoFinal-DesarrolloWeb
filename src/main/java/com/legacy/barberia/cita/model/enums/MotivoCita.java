@@ -1,4 +1,4 @@
-package com.legacy.barberia.cita.model;
+package com.legacy.barberia.cita.model.enums;
 
 public enum MotivoCita{
     Corte_de_barbero,

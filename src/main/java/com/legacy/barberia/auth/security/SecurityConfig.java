@@ -24,7 +24,9 @@ public class SecurityConfig {
     
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
+        return http.csrf(csrf -> csrf
+                .ignoringRequestMatchers("/h2-console/**") // Ignorar CSRF para H2 Console
+            )
             .authorizeHttpRequests(auth -> auth
                 // Recursos estáticos
                 .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/error", "/registro").permitAll()
@@ -55,7 +57,7 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/?logout=true")
                 .permitAll()
             )
             .userDetailsService(userDetailsService)

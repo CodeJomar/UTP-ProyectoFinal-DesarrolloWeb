@@ -1,13 +1,13 @@
 package com.legacy.barberia.cita.controller;
 
-import com.legacy.barberia.cita.model.Cita;
-import com.legacy.barberia.cita.model.EstadoCita;
-import com.legacy.barberia.cita.model.MotivoCita;
+import com.legacy.barberia.auth.model.entities.User;
+import com.legacy.barberia.cita.model.entities.Cita;
+import com.legacy.barberia.cita.model.enums.EstadoCita;
+import com.legacy.barberia.cita.model.enums.MotivoCita;
 import com.legacy.barberia.cita.service.CitaService;
-import com.legacy.barberia.usuario.model.Usuario;
-import com.legacy.barberia.usuario.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,46 +23,59 @@ public class CitaController {
     @Autowired
     private CitaService citaService;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @GetMapping("")
-    public String verCitas(Model model){
-        Long usuarioId= 1L;  //Simulación de usuario
+    @GetMapping
+    public String verCitas(@AuthenticationPrincipal User user, Model model){
         model.addAttribute("cita", new Cita());
-        model.addAttribute("citas", citaService.listarPorUsuario(usuarioId));
+        boolean esAdmin = user.getRole() != null && "ADMIN".equals(user.getRole().getName().name());
+        model.addAttribute("citas", esAdmin ? citaService.listarCitas() : citaService.listarPorUsuario(user));
         model.addAttribute("motivos", MotivoCita.values());
         model.addAttribute("estados", EstadoCita.values());
-
-        return "citas-form-list";
+        return "/citas-form-list";
     }
 
     @PostMapping("/guardar")
     public String guardarCita (@Valid @ModelAttribute("cita") Cita cita,
                                BindingResult result,
+                               @AuthenticationPrincipal User user,
                                Model model,
                                RedirectAttributes redirectAttributes){
 
         if (result.hasErrors()) {
-            model.addAttribute("citas", citaService.listarPorUsuario(1L));
+            model.addAttribute("citas", citaService.listarPorUsuario(user));
             model.addAttribute("motivos", MotivoCita.values());
             model.addAttribute("estados", EstadoCita.values());
             model.addAttribute("abrirModal", true);
-            return "/citas-form-list"; // volver al formulario con errores
+            return "/citas-form-list";
         }
 
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(1L);
-        if (usuarioOpt.isEmpty()) return "redirect:/error";
-
-        cita.setUsuario(usuarioOpt.get());
+        cita.setUser(user);
         citaService.guardarCita(cita);
         redirectAttributes.addFlashAttribute("success", "Cita registrada correctamente.");
         return "redirect:/citas";
     }
-    
+
     @PostMapping("/eliminar")
     public String eliminarCita(@RequestParam Long id){
         citaService.eliminarCita(id);
         return "redirect:/citas";
     }
+
+    @GetMapping("/estado")
+    public String cambiarEstado(@RequestParam Long id,
+                                @RequestParam EstadoCita nuevoEstado,
+                                RedirectAttributes redirectAttributes){
+        Optional<Cita> citaOpt = citaService.buscarPorId(id);
+        if (citaOpt.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Cita no encontrada.");
+            return "redirect:/citas";
+        }
+
+        Cita cita = citaOpt.get();
+        cita.setEstado(nuevoEstado);
+        citaService.guardarCita(cita);
+
+        redirectAttributes.addFlashAttribute("success", "Estado actualizado a " + nuevoEstado);
+        return "redirect:/citas";
+    }
+
 }

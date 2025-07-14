@@ -20,7 +20,145 @@
 
 <body>
   <!-- Navegación -->
-  <nav th:replace="~{components/nav :: nav}"></nav>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-bg shadow-lg" data-bs-theme="dark"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="container-fluid px-3">
+      <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+        <i class="bi bi-scissors me-2"></i>
+        <span class="footer-titulo fw-bold">LEGACY</span>
+      </a>
+
+      <!-- Controles para móvil -->
+      <div class="d-lg-none d-flex align-items-center gap-2">
+        <div class="dropdown">
+          <button class="btn navbar-icon dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+
+            <!-- Si NO está autenticado -->
+            <li sec:authorize="isAnonymous()">
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#authModal" data-auth-type="login">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+              </a>
+            </li>
+            <li sec:authorize="isAnonymous()">
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#authModal" data-auth-type="register">
+                <i class="bi bi-person-plus me-2"></i>Registrarse
+              </a>
+            </li>
+
+            <!-- Si está autenticado -->
+            <li sec:authorize="isAuthenticated()">
+              <a class="dropdown-item" th:href="@{/perfil}">
+                <i class="bi bi-person-circle me-2"></i>Ver Perfil
+              </a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+              <form id="logoutFormMobile" th:action="@{/logout}" method="post" style="display: none;"></form>
+              <a class="dropdown-item" onclick="document.getElementById('logoutFormMobile').submit();" style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right me-2"></i>Salir
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto gap-lg-4">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#nosotros">Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tendencias">Tendencias</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#productos">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#ubicacion">Ubicación</a>
+          </li>
+
+          <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Gestión
+            </a>
+            <ul class="dropdown-menu">
+
+              <!-- Visible para USER, EMPLOYEE, ADMIN -->
+              <li sec:authorize="hasAnyAuthority('ROLE_USER','ROLE_EMPLOYEE','ROLE_ADMIN')">
+                <a class="dropdown-item" th:href="@{/citas}">Citas</a>
+              </li>
+              <li sec:authorize="hasAnyAuthority('ROLE_USER','ROLE_EMPLOYEE','ROLE_ADMIN')">
+                <a class="dropdown-item" th:href="@{/productos}">Productos</a>
+              </li>
+              <li sec:authorize="hasAnyAuthority('ROLE_USER','ROLE_EMPLOYEE','ROLE_ADMIN')">
+                <a class="dropdown-item" th:href="@{/staff}">Equipo</a>
+              </li>
+
+              <li sec:authorize="hasAnyAuthority('ROLE_EMPLOYEE','ROLE_ADMIN')">
+                <hr class="dropdown-divider">
+              </li>
+
+              <!-- Visible solo para EMPLOYEE o ADMIN -->
+              <li sec:authorize="hasAnyAuthority('ROLE_EMPLOYEE','ROLE_ADMIN')">
+                <a class="dropdown-item" th:href="@{/citas-listado}">Citas Admin</a>
+              </li>
+              <li sec:authorize="hasAnyAuthority('ROLE_EMPLOYEE','ROLE_ADMIN')">
+                <a class="dropdown-item" th:href="@{/productos-registro}">Productos Admin</a>
+              </li>
+
+              <!-- Visible solo para ADMIN -->
+              <li sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <a class="dropdown-item" th:href="@{/staff-registro}">Equipo Admin</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Dropdown para desktop -->
+        <div class="d-none d-lg-block">
+          <div class="dropdown">
+            <button class="btn navbar-icon dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li sec:authorize="!isAuthenticated()">
+                <a class="dropdown-item" th:href="@{/login}" data-bs-toggle="modal" data-bs-target="#authModal" data-auth-type="login">
+                  <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                </a>
+              </li>
+              <li sec:authorize="isAnonymous()">
+                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#authModal" data-auth-type="register">
+                  <i class="bi bi-person-plus me-2"></i>Registrarse
+                </a>
+              </li>
+              <li sec:authorize="isAuthenticated()">
+                <a class="dropdown-item" th:href="@{/perfil}">
+                  <i class="bi bi-person-circle me-2"></i>Ver Perfil
+                </a>
+              </li>
+              <li sec:authorize="!isAnonymous()">
+                <form id="logoutFormDesktop" th:action="@{/logout}" method="post">
+                  <button class="dropdown-item" type="submit" style="cursor: pointer;">
+                    <i class="bi bi-box-arrow-right me-2"></i>Salir
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero Section -->
   <section id="inicio" class="carousel slide mt-5" data-bs-ride="carousel">
@@ -372,8 +510,13 @@
             <div class="text-center mb-4">
               <p class="text-muted">Ingresa tus credenciales para acceder</p>
             </div>
-            <form th:action="@{/login}" method="post">
-              <p th:if="${param.error}">Credenciales incorrectas</p>
+
+            <div class="alert alert-danger text-center" th:if="${param.error}" role="alert">
+              Correo o contraseña incorrectos. Intenta nuevamente.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <form th:action="@{/login}" method="post" novalidate>
               <div class="mb-3">
                 <div class="input-group">
                   <span class="input-group-text">
@@ -421,7 +564,7 @@
             <div class="text-center mb-4">
               <p class="text-muted">Únete a la familia Legacy</p>
             </div>
-            <form th:action="@{/registro}" th:object="${userDTO}" method="post">
+            <form th:action="@{/registro}" th:object="${userDTO}" method="post" novalidate>
               <div class="mb-3">
                 <div class="input-group">
                   <span class="input-group-text">
@@ -429,10 +572,13 @@
                   </span>
                   <div class="form-floating">
                     <input type="email" name="username" th:field="*{username}" class="form-control" id="registerEmail"
-                      placeholder="correo@ejemplo.com" required>
+                           placeholder="correo@ejemplo.com" required
+                           th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
                     <label for="registerEmail">Correo Electrónico</label>
                   </div>
-                  <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                </div>
+                <div class="mt-1 ms-1">
+                  <p class="text-danger small" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                 </div>
               </div>
               <div class="mb-3">
@@ -441,11 +587,14 @@
                     <i class="bi bi-lock"></i>
                   </span>
                   <div class="form-floating">
-                    <input type="password" name="password" th:field="*{password}" class="form-control"
-                      id="registerPassword" placeholder="Contraseña" required>
+                    <input type="password" name="password" th:field="*{password}" class="form-control" id="registerPassword"
+                           placeholder="Contraseña" required
+                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
                     <label for="registerPassword">Contraseña</label>
                   </div>
-                  <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+                <div class="mt-1 ms-1">
+                  <p class="text-danger small" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                 </div>
               </div>
               <div class="d-grid mb-3">
@@ -491,7 +640,11 @@
 
   <!-- JavaScript personalizado -->
   <script th:src="@{/js/auth.js}"></script>
-  <script th:src="@{/js/index.js}"></script>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    [[${abrirRegistro} ? 'sessionStorage.setItem("abrirRegistro", "true");' : '']]
+    /*]]>*/
+  </script>
 </body>
 
 </html>

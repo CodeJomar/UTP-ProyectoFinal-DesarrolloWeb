@@ -113,21 +113,6 @@ function getEstadoClass(estadoId) {
   return clases[estadoId] || 'status-pendiente';
 }
 
-function editarCita(id) {
-  editandoCita = true;
-  citaEditId = id;
-
-  document.getElementById('motivo_id').value = '1';
-  document.getElementById('estado_id').value = '2';
-  document.getElementById('fecha').value = '2025-01-15';
-  document.getElementById('hora').value = '10:30';
-
-  document.getElementById('citaModalLabel').innerHTML = '<i class="bi bi-pencil me-2"></i>Editar Cita';
-
-  const modal = new bootstrap.Modal(document.getElementById('citaModal'));
-  modal.show();
-}
-
 function cancelarCita(id) {
   if (confirm('¿Está seguro de que desea cancelar esta cita?')) {
     mostrarAlerta('Cita cancelada correctamente', 'warning');
@@ -151,35 +136,6 @@ function logout() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const botonesEliminar = document.querySelectorAll(".btn-eliminar-cita");
-
-  botonesEliminar.forEach(boton => {
-    boton.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      const citaId = this.getAttribute("data-id");
-
-      if (confirm("¿Estás seguro de que deseas eliminar esta cita?")) {
-        fetch("/citas/eliminar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `id=${citaId}`
-        })
-          .then(response => {
-            if (response.redirected) {
-              window.location.href = response.url;
-            } else {
-              window.location.reload();
-            }
-          })
-          .catch(error => console.error("Error al eliminar cita:", error));
-      }
-    });
-  });
-});
 
 document.addEventListener("DOMContentLoaded", function () {
   const container = document.querySelector("[data-abrir-modal]");

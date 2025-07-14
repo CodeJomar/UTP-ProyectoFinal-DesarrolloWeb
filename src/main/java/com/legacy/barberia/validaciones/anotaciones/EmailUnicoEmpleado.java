@@ -1,17 +1,17 @@
 package com.legacy.barberia.validaciones.anotaciones;
 
-import com.legacy.barberia.validaciones.SalarioMinimoValidator;
+import com.legacy.barberia.validaciones.EmailUnicoEmpleadoValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
 @Documented
-@Target({ElementType.FIELD})
+@Constraint(validatedBy = EmailUnicoEmpleadoValidator.class)
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = SalarioMinimoValidator.class)
-public @interface SalarioMinimo {
-    String message() default "El salario no puede ser menor a S/1160";
+public @interface EmailUnicoEmpleado {
+    String message() default "Este email ya está registrado";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

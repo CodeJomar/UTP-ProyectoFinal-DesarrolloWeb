@@ -21,32 +21,76 @@ function mostrarAlerta(mensaje, tipo = 'success') {
   }, 5000);
 }
 
-// Función para confirmar cita
-function confirmarCita(id) {
-  if (confirm('¿Confirmar esta cita?')) {
-    mostrarAlerta('Cita confirmada correctamente', 'success');
-    // Actualizar estado en la tabla
-    actualizarEstadoCita(id, 'confirmada');
+// Función para confirmar cita // Función para completar cita
+
+function cambiarEstado(idCita, nuevoEstado) {
+  fetch(`/citas/estado?id=${idCita}&nuevoEstado=${nuevoEstado}`, {
+    method: 'GET'
+  })
+    .then(response => {
+      if (response.ok) {
+        location.reload(); // o actualiza la tabla sin recargar
+      } else {
+        alert("Error al cambiar el estado de la cita.");
+      }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function eliminarCita(idCita) {
+  if (confirm("¿Estás seguro de que deseas eliminar esta cita?")) {
+    fetch(`/citas/eliminar?id=${idCita}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `id=${idCita}`
+    })
+      .then(response => {
+        if (response.ok) {
+          location.reload(); // o elimina la fila directamente
+        } else {
+          alert("Error al eliminar la cita.");
+        }
+      })
+      .catch(error => console.error('Error:', error));
   }
 }
 
-// Función para completar cita
-function completarCita(id) {
-  if (confirm('¿Marcar esta cita como completada?')) {
-    mostrarAlerta('Cita marcada como completada', 'success');
-    // Actualizar estado en la tabla
-    actualizarEstadoCita(id, 'completada');
+function cambiarEstado(idCita, nuevoEstado) {
+  fetch(`/citas/estado?id=${idCita}&nuevoEstado=${nuevoEstado}`, {
+    method: 'GET'
+  })
+    .then(response => {
+      if (response.ok) {
+        location.reload(); // Puedes optimizar esto actualizando solo la fila
+      } else {
+        alert("No se pudo actualizar el estado.");
+      }
+    })
+    .catch(error => console.error('Error al cambiar estado:', error));
+}
+
+function eliminarCita(idCita) {
+  if (confirm("¿Seguro que deseas eliminar esta cita?")) {
+    fetch(`/citas/eliminar?id=${idCita}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `id=${idCita}`
+    })
+      .then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert("No se pudo eliminar la cita.");
+        }
+      })
+      .catch(error => console.error('Error al eliminar cita:', error));
   }
 }
 
-// Función para cancelar cita
-function cancelarCita(id) {
-  if (confirm('¿Está seguro de que desea cancelar esta cita?')) {
-    mostrarAlerta('Cita cancelada', 'warning');
-    // Actualizar estado en la tabla
-    actualizarEstadoCita(id, 'cancelada');
-  }
-}
 
 // Función para editar cita
 function editarCita(id) {

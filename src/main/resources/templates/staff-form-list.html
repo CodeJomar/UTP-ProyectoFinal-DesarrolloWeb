@@ -47,7 +47,7 @@
         <div class="tab-content" id="adminTabContent">
           <div class="tab-pane fade show active" id="empleado" role="tabpanel">
             <form method="post" th:action="@{/staff-registro/guardar}" th:object="${empleadoDto}" id="empleadoForm"
-              class="needs-validation">
+              class="needs-validation" novalidate>
               <input type="hidden" th:field="*{id}" />
 
               <h5 class="mb-3">
@@ -58,8 +58,10 @@
               <div class="row g-3">
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input th:field="*{username}" type="email" class="form-control" id="empleado_usuario_email"
-                      placeholder="correo@ejemplo.com" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
+                    <input th:field="*{username}" type="email" class="form-control"
+                           id="empleado_usuario_email" placeholder="correo@ejemplo.com"
+                           th:readonly="${empleadoDto.id != null}"
+                           th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
                     <label for="empleado_usuario_email"><i class="bi bi-envelope me-2"></i>Email</label>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Email
                       inválido</div>
@@ -68,8 +70,10 @@
 
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input th:field="*{password}" type="password" class="form-control" id="empleado_usuario_clave"
-                      placeholder="Contraseña" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                    <input th:field="*{password}" type="password" class="form-control"
+                           id="empleado_usuario_clave" placeholder="Contraseña"
+                           th:readonly="${empleadoDto.id != null}"
+                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
                     <label for="empleado_usuario_clave"><i class="bi bi-lock me-2"></i>Contraseña</label>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">La
                       contraseña no debe estar en blanco.</div>
@@ -80,7 +84,15 @@
               <hr class="my-4">
               <h5 class="mb-3"><i class="bi bi-briefcase me-2"></i>Datos del Empleado</h5>
 
+
+
               <div class="row g-3">
+                <div class="alert alert-danger text-center" th:if="${#fields.hasGlobalErrors()}" role="alert">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
                 <div class="col-md-4">
                   <div class="form-floating">
                     <input th:field="*{fechaContrato}" type="date" class="form-control" id="empleado_fecha_contrato"
@@ -172,9 +184,9 @@
                 <tr th:each="e : ${empleados}">
                   <td th:text="${e.id}"></td>
                   <td th:text="${e.usuarioEmpleado.username}"></td>
-                  <td th:text="${e.salario}"></td>
-                  <td th:text="${#temporals.format(e.fechaContrato, 'dd/MM/yyyy')}"></td>
-                  <td th:text="${#temporals.format(e.fechaDespido, 'dd/MM/yyyy')}"></td>
+                  <td th:text="${'S/. ' + e.salario}"></td>
+                  <td th:text="${#temporals.format(e.fechaContrato, 'yyyy-MM-dd')}"></td>
+                  <td th:text="${#temporals.format(e.fechaDespido, 'yyyy-MM-dd')}"></td>
                   <td>
                     <span th:text="${e.estado.displayName}" th:class="'badge ' + ${e.estado.cssClass}"></span>
                   </td>

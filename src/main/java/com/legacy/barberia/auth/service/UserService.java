@@ -23,9 +23,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     
     public void registrarUsuario(RegisUserDTO dto) {
-        if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("El usuario ya existe");
-        }
+//        if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
+//            throw new IllegalArgumentException("El usuario ya existe");
+//        }
         
         Role defaultRole = roleRepository.findAll().stream()
             .filter(r -> r.getName().equals(RoleList.ROLE_USER))

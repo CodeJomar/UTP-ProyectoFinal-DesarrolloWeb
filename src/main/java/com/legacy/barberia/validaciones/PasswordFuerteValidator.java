@@ -10,7 +10,7 @@ public class PasswordFuerteValidator implements ConstraintValidator<PasswordFuer
     
     @Override
     public boolean isValid(String clave, ConstraintValidatorContext context) {
-        if (clave == null || clave.isBlank()) return false;
+        if (clave == null || clave.isBlank()) return true;
         return clave.matches(REGEX);
     }
 }

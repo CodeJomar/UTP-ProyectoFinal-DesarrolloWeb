@@ -1,12 +1,12 @@
 package com.legacy.barberia.empleado.model.dtos;
 
 import com.legacy.barberia.empleado.model.enums.EstadoEmpleado;
-import com.legacy.barberia.validaciones.anotaciones.DuracionMinimaContrato;
-import com.legacy.barberia.validaciones.anotaciones.SalarioMinimo;
+import com.legacy.barberia.validaciones.anotaciones.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,23 +15,27 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @DuracionMinimaContrato
+@EmailUnicoEmpleado
 public class RegisEmpleadoDTO {
     
     private Long id;
+    
+    private String userId;
     
     @NotBlank(message = "Este campo es obligatorio")
     @Email(message = "Este campo debe tener el formato email")
     private String username;
     
-    @NotBlank(message = "Este campo es obligatorio")
+    @PasswordFuerte
     private String password;
     
     @NotNull(message = "Este campo es obligatorio")
-    @FutureOrPresent(message = "La fecha de contrato debe ser hoy o un día futuro")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaContrato;
     
     @NotNull(message = "Este campo es obligatorio")
     @FutureOrPresent(message = "La fecha de despido no puede ser un día pasado")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaDespido;
     
     @NotNull(message = "Este campo es obligatorio")
@@ -41,5 +45,5 @@ public class RegisEmpleadoDTO {
     
     @NotNull(message = "Este campo es obligatorio")
     private EstadoEmpleado estado;
-    
 }
+

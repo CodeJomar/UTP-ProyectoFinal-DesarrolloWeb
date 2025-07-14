@@ -20,10 +20,7 @@ public class EmpleadoRegistroController {
     
     @GetMapping("")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("empleadoDto", new RegisEmpleadoDTO());
-        model.addAttribute("empleados", empleadoService.listarEmpleados());
-        model.addAttribute("totalEmpleados", empleadoService.contarEmpleados());
-        model.addAttribute("estados", EstadoEmpleado.values());
+        prepararFormulario(model, new RegisEmpleadoDTO());
         return "staff-form-list";
     }
     
@@ -32,30 +29,16 @@ public class EmpleadoRegistroController {
                                   BindingResult result,
                                   Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("empleados", empleadoService.listarEmpleados());
-            model.addAttribute("totalEmpleados", empleadoService.contarEmpleados());
-            model.addAttribute("estados", EstadoEmpleado.values());
+            prepararFormulario(model, dto);
             return "staff-form-list";
         }
-        try {
-            if (dto.getId() != null) {
-                empleadoService.actualizarEmpleado(dto);
-            } else {
-                empleadoService.registrarEmpleado(dto);
-            }
-        } catch (IllegalArgumentException e) {
-            result.rejectValue("username", null, e.getMessage());
-            model.addAttribute("empleados", empleadoService.listarEmpleados());
-            model.addAttribute("totalEmpleados", empleadoService.contarEmpleados());
-            model.addAttribute("estados", EstadoEmpleado.values());
-            return "staff-form-list";
+        
+        if (dto.getId() != null) {
+            empleadoService.actualizarEmpleado(dto);
+        } else {
+            empleadoService.registrarEmpleado(dto);
         }
-        return "redirect:/staff-registro";
-    }
-    
-    @GetMapping("/eliminar")
-    public String eliminarEmpleado(@RequestParam Long id) {
-        empleadoService.eliminarEmpleado(id);
+        
         return "redirect:/staff-registro";
     }
     
@@ -65,18 +48,25 @@ public class EmpleadoRegistroController {
             .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
         
         RegisEmpleadoDTO dto = new RegisEmpleadoDTO();
-        dto.setId(empleado.getId());
-        dto.setUsername(empleado.getUsuarioEmpleado().getUsername());
-        dto.setPassword(empleado.getUsuarioEmpleado().getPassword());
-        dto.setFechaContrato(empleado.getFechaContrato());
-        dto.setFechaDespido(empleado.getFechaDespido());
-        dto.setSalario(empleado.getSalario());
-        dto.setEstado(empleado.getEstado());
+            dto.setId(empleado.getId());
+            dto.setUsername(empleado.getUsuarioEmpleado().getUsername());
+            dto.setPassword(empleado.getUsuarioEmpleado().getPassword());
+            dto.setUserId(empleado.getUsuarioEmpleado().getId());
+            dto.setFechaContrato(empleado.getFechaContrato());
+            dto.setFechaDespido(empleado.getFechaDespido());
+            dto.setSalario(empleado.getSalario());
+            dto.setEstado(empleado.getEstado());
         
-        model.addAttribute("empleadoDto", dto);
-        model.addAttribute("empleados", empleadoService.listarEmpleados());
-        model.addAttribute("estados", EstadoEmpleado.values());
-        model.addAttribute("totalEmpleados", empleadoService.contarEmpleados());
+        prepararFormulario(model, dto);
         return "staff-form-list";
     }
+    
+    
+    private void prepararFormulario(Model model, RegisEmpleadoDTO dto) {
+        model.addAttribute("empleadoDto", dto);
+        model.addAttribute("empleados", empleadoService.listarEmpleados());
+        model.addAttribute("totalEmpleados", empleadoService.contarEmpleados());
+        model.addAttribute("estados", EstadoEmpleado.values());
+    }
+    
 }

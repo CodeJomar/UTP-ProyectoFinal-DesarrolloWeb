@@ -10,6 +10,13 @@ public class SalarioMinimoValidator implements ConstraintValidator<SalarioMinimo
     
     @Override
     public boolean isValid(BigDecimal value, ConstraintValidatorContext context) {
-        return value != null && value.compareTo(new BigDecimal("1150")) >= 0;
+        // Si es null, que lo valide @NotNull
+        if (value == null) return true;
+        
+        // Si es negativo o cero, que lo valide @Positive
+        if (value.compareTo(BigDecimal.ZERO) <= 0) return true;
+        
+        // Aquí sí valida salario mínimo
+        return value.compareTo(new BigDecimal("1160")) >= 0;
     }
 }

@@ -11,14 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WebController {
     
-    @GetMapping("/")
-    public String index(Model model) {
-        if (!model.containsAttribute("userDTO")) {
-            model.addAttribute("userDTO", new RegisUserDTO());
-        }
-        return "index";
-    }
-    
     @GetMapping("/acceso-denegado")
     public String accesoDenegado() {
         return "acceso-denegado";
@@ -35,10 +27,10 @@ public class WebController {
 //        return "citas-form-list";
 //    }
     
-    @GetMapping("/citas-listado")
-    public String mostrarPaginaCitasRegistradas() {
-        return "citas-list";
-    }
+//    @GetMapping("/citas-listado")
+//    public String mostrarPaginaCitasRegistradas() {
+//        return "citas-list";
+//    }
     
 //    @GetMapping("/productos")
 //    public String mostrarPaginaProductos() {

@@ -29,10 +29,6 @@ public class EmpleadoService {
     private final PasswordEncoder passwordEncoder;
     
     public Empleado registrarEmpleado(RegisEmpleadoDTO dto) {
-        if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("El usuario ya está registrado");
-        }
-        
         Role roleEmpleado = roleRepository.findAll().stream()
             .filter(r -> r.getName().equals(RoleList.ROLE_EMPLOYEE))
             .findFirst()
@@ -61,13 +57,9 @@ public class EmpleadoService {
         
         User usuarioExistente = empleadoExistente.getUsuarioEmpleado();
         
-        if (!usuarioExistente.getUsername().equals(dto.getUsername())) {
-            if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
-                throw new IllegalArgumentException("El usuario ya está registrado");
-            }
-            usuarioExistente.setUsername(dto.getUsername());
-        }
-        if (StringUtils.hasText(dto.getPassword())) {
+        // Email y password son readonly, así que no se modifican
+        
+        if (StringUtils.hasText(dto.getPassword()) && !dto.getPassword().equals(usuarioExistente.getPassword())) {
             usuarioExistente.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
         
@@ -100,7 +92,7 @@ public class EmpleadoService {
     public long contarEmpleados() {
         return empleadoRepository.count();
     }
-    // Evento con Clase ENUM
+    
     @Scheduled(cron = "0 0 0 * * *") // Todos los días a la medianoche
     public void actualizarEstadosEmpleados() {
         List<Empleado> empleados = empleadoRepository.findAll();
@@ -110,24 +102,17 @@ public class EmpleadoService {
             EstadoEmpleado estadoActual = empleado.getEstado();
             EstadoEmpleado nuevoEstado = estadoActual;
             
-            // Verifica si ya terminó el contrato
             if (empleado.getFechaDespido() != null && empleado.getFechaDespido().isBefore(hoy)) {
                 nuevoEstado = EstadoEmpleado.INACTIVO;
-            } else {
-                // Si hoy está entre fechaContrato y fechaDespido (o no hay despido), marcar como ACTIVO
-                if (empleado.getFechaContrato() != null &&
-                    (empleado.getFechaDespido() == null || !empleado.getFechaDespido().isBefore(hoy))) {
-                    nuevoEstado = EstadoEmpleado.ACTIVO;
-                }
+            } else if (empleado.getFechaContrato() != null &&
+                (empleado.getFechaDespido() == null || !empleado.getFechaDespido().isBefore(hoy))) {
+                nuevoEstado = EstadoEmpleado.ACTIVO;
             }
             
-            // Guardar solo si hay cambio
             if (!estadoActual.equals(nuevoEstado)) {
                 empleado.setEstado(nuevoEstado);
                 empleadoRepository.save(empleado);
             }
         }
     }
-    
-    
 }
