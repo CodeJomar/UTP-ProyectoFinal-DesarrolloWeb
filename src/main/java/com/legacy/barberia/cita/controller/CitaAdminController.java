@@ -21,7 +21,7 @@ public class CitaAdminController {
     
     @GetMapping("")
     public String verCitasAdmin(@AuthenticationPrincipal User user, Model model) {
-        if(!user.getRole().getName().name().equals("ROLE_ADMIN")){
+        if(!user.getRole().getName().name().equals("ROLE_ADMIN") && !user.getRole().getName().name().equals("ROLE_EMPLOYEE")){
             return "redirect:/citas";
         }
         List<Cita> citas = citaService.obtenerCitasGeneradas();
